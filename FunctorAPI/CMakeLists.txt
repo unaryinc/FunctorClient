@@ -17,9 +17,9 @@ add_custom_command(TARGET FunctorAPI POST_BUILD
 	#Copy files
 	COMMAND ${CMAKE_COMMAND} 
 	-E remove 
-	"${OUTPUT_DIR}/FunctorAPI${RUNTIME}" 
+	"${OUTPUT_DIR}/FunctorAPI${FILE_PREFIX}${RUNTIME}" 
 	COMMAND ${CMAKE_COMMAND} 
 	-E copy 
 	"${CMAKE_CURRENT_BINARY_DIR}/FunctorAPI${RUNTIME}" 
-	"${OUTPUT_DIR}"
+	"${OUTPUT_DIR}/FunctorAPI${FILE_PREFIX}${RUNTIME}"
 )

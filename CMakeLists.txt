@@ -10,12 +10,14 @@ if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
 else()
 	set(ARCHITECTURE "x32") 
 endif()
-#=======================================================================#
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-	set(BUILD_VER "Debug")
+	set(BUILD_VER "d")
 else()
-	set(BUILD_VER "Release")
+	set(BUILD_VER "")
 endif()
+
+set(FILE_PREFIX ${ARCHITECTURE}${BUILD_VER})
 #=======================================================================#
 if(MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
@@ -38,7 +40,7 @@ if(MSVC)
 	set(OS "Windows")
 endif()
 #=======================================================================#
-set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Output/${OS}/${ARCHITECTURE}/${BUILD_VER}/")
+set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Output/${OS}/")
 #=======================================================================#
 set(RPCLIB_ROOT_DIR Thirdparty/rpclib-2.2.1)
 #=======================================================================#
