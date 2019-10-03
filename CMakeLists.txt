@@ -38,9 +38,10 @@ if(MSVC)
 	set(EXECUTABLE ".exe")
 	set(RUNTIME ".dll")
 	set(OS "Windows")
+	set(LIB_PREFIX "")
 endif()
 #=======================================================================#
-set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Output/${OS}/")
+set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Output/${OS}")
 #=======================================================================#
 set(RPCLIB_ROOT_DIR Thirdparty/rpclib-2.2.1)
 #=======================================================================#
@@ -48,3 +49,41 @@ add_subdirectory(${RPCLIB_ROOT_DIR})
 add_subdirectory(FunctorApp)
 add_subdirectory(FunctorAPI)
 #=======================================================================#
+
+add_custom_target(Final ALL)
+add_dependencies(Final FunctorApp FunctorAPI)
+
+add_custom_command(TARGET Final POST_BUILD
+	COMMAND ${CMAKE_COMMAND} 
+	-E remove_directory 
+	"${OUTPUT_DIR}"
+	COMMAND ${CMAKE_COMMAND} 
+	-E make_directory 
+	"${OUTPUT_DIR}"
+	#Copy files
+	COMMAND ${CMAKE_COMMAND}
+	-E copy 
+	"${CMAKE_CURRENT_SOURCE_DIR}/build/FunctorAPI/FunctorAPI${RUNTIME}" 
+	"${OUTPUT_DIR}/FunctorAPI${FILE_PREFIX}${RUNTIME}"
+	#Copy files
+	COMMAND ${CMAKE_COMMAND}
+	-E copy 
+	"${CMAKE_CURRENT_SOURCE_DIR}/build/FunctorApp/FunctorApp${EXECUTABLE}" 
+	"${OUTPUT_DIR}/FunctorApp${FILE_PREFIX}${EXECUTABLE}"
+	COMMAND ${CMAKE_COMMAND}
+	-E copy 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}AppCore${ARCHITECTURE}${RUNTIME}" 
+	"${OUTPUT_DIR}"
+	COMMAND ${CMAKE_COMMAND}
+	-E copy 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}UltralightCore${ARCHITECTURE}${RUNTIME}" 
+	"${OUTPUT_DIR}"
+	COMMAND ${CMAKE_COMMAND}
+	-E copy 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}Ultralight${ARCHITECTURE}${RUNTIME}" 
+	"${OUTPUT_DIR}"
+	COMMAND ${CMAKE_COMMAND}
+	-E copy 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}WebCore${ARCHITECTURE}${RUNTIME}" 
+	"${OUTPUT_DIR}"
+)
