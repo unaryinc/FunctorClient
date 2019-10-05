@@ -39,13 +39,17 @@ if(MSVC)
 	set(RUNTIME ".dll")
 	set(OS "Windows")
 	set(LIB_PREFIX "")
+	set(ICON ".ico")
 endif()
 #=======================================================================#
-set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Output/${OS}")
+set(OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Output/${OS}/${ARCHITECTURE}")
 #=======================================================================#
-set(RPCLIB_ROOT_DIR Thirdparty/rpclib-2.2.1)
+set(RPCLIB_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/rpclib-2.2.1")
+set(ULTRALIGHT_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight")
+set(TRAY_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/tray")
 #=======================================================================#
 add_subdirectory(${RPCLIB_ROOT_DIR})
+add_subdirectory(${TRAY_ROOT_DIR})
 add_subdirectory(FunctorApp)
 add_subdirectory(FunctorAPI)
 #=======================================================================#
@@ -72,18 +76,22 @@ add_custom_command(TARGET Final POST_BUILD
 	"${OUTPUT_DIR}/FunctorApp${FILE_PREFIX}${EXECUTABLE}"
 	COMMAND ${CMAKE_COMMAND}
 	-E copy 
-	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}AppCore${ARCHITECTURE}${RUNTIME}" 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${ARCHITECTURE}/${LIB_PREFIX}AppCore${RUNTIME}" 
 	"${OUTPUT_DIR}"
 	COMMAND ${CMAKE_COMMAND}
 	-E copy 
-	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}UltralightCore${ARCHITECTURE}${RUNTIME}" 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${ARCHITECTURE}/${LIB_PREFIX}UltralightCore${RUNTIME}" 
 	"${OUTPUT_DIR}"
 	COMMAND ${CMAKE_COMMAND}
 	-E copy 
-	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}Ultralight${ARCHITECTURE}${RUNTIME}" 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${ARCHITECTURE}/${LIB_PREFIX}Ultralight${RUNTIME}" 
 	"${OUTPUT_DIR}"
 	COMMAND ${CMAKE_COMMAND}
 	-E copy 
-	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${LIB_PREFIX}WebCore${ARCHITECTURE}${RUNTIME}" 
+	"${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/ultralight/bin/${OS}/${ARCHITECTURE}/${LIB_PREFIX}WebCore${RUNTIME}" 
+	"${OUTPUT_DIR}"
+	COMMAND ${CMAKE_COMMAND}
+	-E copy 
+	"${CMAKE_CURRENT_SOURCE_DIR}/FunctorApp/Functor${ICON}" 
 	"${OUTPUT_DIR}"
 )

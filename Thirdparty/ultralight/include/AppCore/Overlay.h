@@ -41,7 +41,24 @@ public:
   /// @param  y       The y-position (offset from the top of the Window), in
   ///                 device coordinates.
   ///
-  static Ref<Overlay> Create(Ref<Window> window, int width, int height, int x, int y);
+  static Ref<Overlay> Create(Ref<Window> window, uint32_t width,
+                             uint32_t height, int x, int y);
+
+  ///
+  /// Create a new Overlay, wrapping an existing View.
+  ///
+  /// @param  window  The window to create the Overlay in. (we currently only
+  ///                 support one window per application)
+  ///
+  /// @param  view    The View to wrap (will use its width and height).
+  ///
+  /// @param  x       The x-position (offset from the left of the Window), in
+  ///                 device coordinates.
+  ///
+  /// @param  y       The y-position (offset from the top of the Window), in
+  ///                 device coordinates.
+  ///
+  static Ref<Overlay> Create(Ref<Window> window, Ref<View> view, int x, int y);
 
   ///
   /// Get the underlying View.
@@ -51,12 +68,12 @@ public:
   ///
   /// Get the width (in device coordinates).
   ///
-  virtual int width() const = 0;
+  virtual uint32_t width() const = 0;
 
   ///
   /// Get the height (in device coordinates).
   ///
-  virtual int height() const = 0;
+  virtual uint32_t height() const = 0;
   
   ///
   /// Get the x-position (offset from the left of the Window), in device
@@ -109,7 +126,7 @@ public:
   /// Resize the overlay (and underlying View), dimensions should be
   /// specified in device coordinates.
   ///
-  virtual void Resize(int width, int height) = 0;
+  virtual void Resize(uint32_t width, uint32_t height) = 0;
 
 protected:
   virtual ~Overlay();

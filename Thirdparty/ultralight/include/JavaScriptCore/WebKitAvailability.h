@@ -26,7 +26,7 @@
 #ifndef __WebKitAvailability__
 #define __WebKitAvailability__
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) && defined(DEFINE_AVAILABILITY_MACROS)
 
 #include <AvailabilityMacros.h>
 #include <CoreFoundation/CoreFoundation.h>
@@ -76,8 +76,10 @@
 #endif
 
 #else
+#ifndef CF_AVAILABLE
 #define CF_AVAILABLE(_mac, _ios)
 #define CF_ENUM_AVAILABLE(_mac, _ios)
+#endif
 #endif
 
 #endif /* __WebKitAvailability__ */

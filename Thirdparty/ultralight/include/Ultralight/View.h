@@ -44,6 +44,16 @@ public:
   virtual String title() = 0;
 
   ///
+  /// Get the width of the View, in device coordinates.
+  ///
+  virtual uint32_t width() const = 0;
+
+  ///
+  /// Get the height of the View, in device coordinates.
+  ///
+  virtual uint32_t height() const = 0;
+
+  ///
   /// Check if the main frame of the page is currently loading.
   ///
   virtual bool is_loading() = 0;
@@ -213,6 +223,8 @@ public:
   /// Renderer::Render.
   ///
   virtual bool needs_paint() const = 0;
+
+  virtual RefPtr<View> inspector() = 0;
 
 protected:
   virtual ~View();

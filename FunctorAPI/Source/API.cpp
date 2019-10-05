@@ -2,6 +2,11 @@
 
 API::API()
 {
+
+	ClientPtr = std::make_unique<rpc::client>("localhost", 3000);
+
+	ClientPtr->call("connect").as<bool>();
+
 	std::cout << "API();" << std::endl;
 	Test();
 }
