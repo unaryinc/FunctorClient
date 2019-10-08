@@ -1,6 +1,8 @@
 #ifndef TRAY_H
 #define TRAY_H
 
+#include <functional>
+
 struct tray_menu;
 
 struct tray {
@@ -13,7 +15,8 @@ struct tray_menu {
   int disabled;
   int checked;
 
-  void (*cb)(struct tray_menu *);
+  std::function<void(tray_menu* item)> cb;
+
   void *context;
 
   struct tray_menu *submenu;
